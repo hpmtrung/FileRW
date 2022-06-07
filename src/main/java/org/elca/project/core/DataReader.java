@@ -1,5 +1,7 @@
 package org.elca.project.core;
 
+import org.elca.project.reader.CSVReader;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -7,32 +9,26 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public abstract class DataReader {
-  public void readFile(File file) throws IOException {
-    FileInputStream fis = null;
-    Scanner sc = null;
+
+  private static final DataReader INSTANCE;
+
+  static {
+    INSTANCE = new CSVReader();
+  }
+
+  public static DataReader getInstance() {
+    return INSTANCE;
+  }
+
+  public void processFile(File file) {
     try {
-      fis = new FileInputStream(file);
-      sc = new Scanner(fis, "UTF-8");
-      while (sc.hasNextLine()) {
-        String line = sc.nextLine();
-
-      }
-      // Scanner suppresses exceptions
-      if (sc.ioException() != null) {
-        throw sc.ioException();
-      }
-    } catch (FileNotFoundException e) {
-
-    } catch (Exception e) {
-    } finally {
-      if (fis != null) {
-        fis.close();
-      }
-      if (sc != null) {
-        sc.close();
-      }
+      readFile(file);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
+
+  public abstract void readFile(File file) throws IOException;
 
   public abstract void processData();
 
