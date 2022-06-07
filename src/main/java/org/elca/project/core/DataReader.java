@@ -2,35 +2,23 @@ package org.elca.project.core;
 
 import org.elca.project.reader.CSVReader;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Scanner;
+public class DataReader {
 
-public abstract class DataReader {
+  private static final DataReader INSTANCE = new DataReader();
 
-  private static final DataReader INSTANCE;
+  public static DataReader getInstance() { return INSTANCE; }
 
-  static {
-    INSTANCE = new CSVReader();
+  private TemplateReader reader = new CSVReader();
+
+  private DataReader() {
   }
 
-  public static DataReader getInstance() {
-    return INSTANCE;
+  public void changeReader(TemplateReader reader) {
+    if (reader == null) throw new NullPointerException();
+    this.reader = reader;
   }
 
-  public void processFile(File file) {
-    try {
-      readFile(file);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+  public TemplateReader getReader() {
+    return reader;
   }
-
-  public abstract void readFile(File file) throws IOException;
-
-  public abstract void processData();
-
-  public abstract void printResult();
 }
