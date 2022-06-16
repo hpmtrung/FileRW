@@ -4,17 +4,24 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.elca.project.core.TemplateReader;
 
-import javax.print.attribute.standard.MediaSize;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class CSVReader extends TemplateReader {
+
+  private static boolean isRecordValid(CSVRecord record) {
+    String country = record.get(COUNTRY_HEADER);
+    String isHeadQuater = record.get(IS_HEADQUATER_HEADER);
+    return (country != null
+        && country.equals(FILTER_COUNTRY)
+        && isHeadQuater != null
+        && isHeadQuater.equals("1"));
+  }
 
   @Override
   protected void printInfo() {
@@ -44,14 +51,5 @@ public class CSVReader extends TemplateReader {
         items.add(name);
       }
     }
-  }
-
-  private static boolean isRecordValid(CSVRecord record) {
-    String country = record.get(COUNTRY_HEADER);
-    String isHeadQuater = record.get(IS_HEADQUATER_HEADER);
-    return (country != null
-        && country.equals(FILTER_COUNTRY)
-        && isHeadQuater != null
-        && isHeadQuater.equals("1"));
   }
 }

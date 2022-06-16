@@ -18,7 +18,6 @@ import javax.xml.stream.XMLStreamReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.text.FieldPosition;
 import java.util.List;
 
 public class XMLReader extends TemplateReader {
