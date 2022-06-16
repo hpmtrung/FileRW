@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 public class ResultCreator {
   private final SortMode sortMode;
   private final int limit;
+
   private ResultCreator(Builder builder) {
     this.sortMode = builder.sortMode;
     this.limit = builder.limit;
